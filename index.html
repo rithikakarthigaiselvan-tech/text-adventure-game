@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dungeon Explorer - Play Online</title>
     
-    <!-- Enable Cross-Origin Isolation on GitHub Pages for SharedArrayBuffer -->
-    <script src="https://cdn.jsdelivr.net/gh/gzuidhof/coi-serviceworker@master/coi-serviceworker.js"></script>
+    <!-- Load local coi-serviceworker to satisfy same-origin security policy -->
+    <script src="./coi-serviceworker.js"></script>
     
     <!-- PyScript Core -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
