@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Explorer - Play Online</title>
+    <!-- PyScript CSS & JS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #58a6ff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: #f0883e;
+            margin-bottom: 10px;
+        }
+        #game-output {
+            background-color: #161b22;
+            border: 2px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dungeon Explorer</h1>
+    <p style="color: #8b949e;">Running Python in your browser via PyScript</p>
+    
+    <div id="game-output">
+        <script type="py" src="./main.py" config='{"terminal": true}'></script>
+    </div>
+</body>
+</html>
