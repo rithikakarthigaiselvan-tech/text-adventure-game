@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Dungeon Explorer - Text-Based Adventure Game
 
 A command-line text adventure game written in Python. Make choices, manage your inventory and health, collect ancient keys, and escape the dungeon!
@@ -6,8 +5,6 @@ A command-line text adventure game written in Python. Make choices, manage your 
 ## How to Run Locally
 
 1. Clone the repository:
-
-2. Run the game:
-=======
-# text-adventure-game
->>>>>>> 287aed5bcf56be3b757d9accec8af55a2fe98a26
+   ```bash
+   git clone [https://github.com/rithikakarthigaiselvan-tech/text-adventure-game.git](https://github.com/rithikakarthigaiselvan-tech/text-adventure-game.git)
+   cd text-adventure-game
