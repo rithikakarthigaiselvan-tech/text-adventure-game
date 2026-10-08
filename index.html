@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dungeon Explorer - Play Online</title>
-    <!-- PyScript CSS & JS (Latest Version) -->
+    <!-- PyScript Core -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
     <style>
         body {
             background-color: #0d1117;
             color: #c9d1d9;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -30,24 +30,129 @@
             margin-top: 0;
             margin-bottom: 20px;
         }
-        .terminal-container {
+        .terminal-wrapper {
             width: 100%;
             max-width: 800px;
-            height: 500px;
+            height: 520px;
             border: 2px solid #30363d;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            background-color: #000;
         }
     </style>
 </head>
 <body>
     <h1>Dungeon Explorer</h1>
-    <p>A Python CLI game running in Web Worker thread</p>
+    <p>Click inside the terminal box below to play</p>
     
-    <div class="terminal-container">
-        <!-- The worker and terminal attributes allow input() and time.sleep() to work smoothly -->
-        <script type="py" src="./main.py" worker terminal></script>
+    <div class="terminal-wrapper">
+        <script type="py" config='{"packages": []}' worker terminal>
+import time
+import sys
+
+def print_pause(text, delay=1.0):
+    print(text)
+    time.sleep(delay)
+
+def show_status(health, inventory):
+    print("\n" + "=" * 40)
+    print(f"  HEALTH: {health}/100")
+    print(f"  INVENTORY: {', '.join(inventory) if inventory else 'Empty'}")
+    print("=" * 40 + "\n")
+
+def game_over(reason):
+    print_pause("\n" + "*" * 40)
+    print_pause(f"GAME OVER: {reason}")
+    print_pause("*" * 40 + "\n")
+    replay = input("Play again? (yes/no): ").strip().lower()
+    if replay in ["yes", "y"]:
+        start_game()
+    else:
+        print_pause("Thanks for playing!")
+        sys.exit()
+
+def victory():
+    print_pause("\n" + "#" * 40)
+    print_pause("VICTORY! You escaped the dungeon!")
+    print_pause("#" * 40 + "\n")
+    replay = input("Play again? (yes/no): ").strip().lower()
+    if replay in ["yes", "y"]:
+        start_game()
+    else:
+        print_pause("Thanks for playing!")
+        sys.exit()
+
+def boss_room(health, inventory):
+    print_pause("\nYou step into a grand chamber guarded by an Obsidian Golem.")
+    show_status(health, inventory)
+    if "Golden Key" not in inventory:
+        print_pause("Without the Golden Key, you are trapped!")
+        game_over("Trapped in the boss room.")
+        return
+
+    print_pause("You dodge the Golem and race toward the Golden Gate!")
+    if "Shield" in inventory:
+        print_pause("You block the Golem's strike with your Shield!")
+    else:
+        health -= 40
+        print_pause(f"The Golem hits you for 40 damage! Current Health: {health}")
+        if health <= 0:
+            game_over("Crushed by the Golem.")
+            return
+
+    print_pause("You turn the Golden Key in the lock...")
+    victory()
+
+def armory_room(health, inventory):
+    print_pause("\nYou walk into an abandoned Armory.")
+    if "Shield" not in inventory:
+        choice = input("Take the Iron Shield? (yes/no): ").strip().lower()
+        if choice in ["yes", "y"]:
+            inventory.append("Shield")
+            print_pause("Item added: Iron Shield!")
+    show_status(health, inventory)
+    input("Press Enter to proceed...")
+    boss_room(health, inventory)
+
+def crypt_room(health, inventory):
+    print_pause("\nYou descend into a damp Crypt.")
+    if "Golden Key" not in inventory:
+        print_pause("A skeleton guards a Golden Key!")
+        print_pause("1. Fight\n2. Sneak")
+        choice = input("Choose 1 or 2: ").strip()
+        if choice == "1":
+            health -= 25
+            inventory.append("Golden Key")
+            print_pause("You defeated the skeleton but lost 25 health!")
+        else:
+            inventory.append("Golden Key")
+            print_pause("You sneaked past and grabbed the Golden Key!")
+    show_status(health, inventory)
+    input("Press Enter to proceed...")
+    boss_room(health, inventory)
+
+def start_game():
+    health = 100
+    inventory = []
+    print_pause("=========================================")
+    print_pause("      WELCOME TO DUNGEON EXPLORER        ")
+    print_pause("=========================================")
+    show_status(health, inventory)
+
+    while True:
+        print("1. Enter the Armory")
+        print("2. Descend into the Crypt")
+        choice = input("Where do you want to go? (1 or 2): ").strip()
+        if choice == "1":
+            armory_room(health, inventory)
+            break
+        elif choice == "2":
+            crypt_room(health, inventory)
+            break
+
+start_game()
+        </script>
     </div>
 </body>
 </html>
