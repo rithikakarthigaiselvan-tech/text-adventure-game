@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dungeon Explorer - Play Online</title>
+    
+    <!-- Enable Cross-Origin Isolation on GitHub Pages for SharedArrayBuffer -->
+    <script src="https://cdn.jsdelivr.net/gh/gzuidhof/coi-serviceworker@master/coi-serviceworker.js"></script>
+    
     <!-- PyScript Core -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    
     <style>
         body {
             background-color: #0d1117;
@@ -44,14 +49,14 @@
 </head>
 <body>
     <h1>Dungeon Explorer</h1>
-    <p>Click inside the terminal box below to play</p>
+    <p>A Python CLI game running live in your browser</p>
     
     <div class="terminal-wrapper">
         <script type="py" config='{"packages": []}' worker terminal>
 import time
 import sys
 
-def print_pause(text, delay=1.0):
+def print_pause(text, delay=0.8):
     print(text)
     time.sleep(delay)
 
